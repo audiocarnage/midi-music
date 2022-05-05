@@ -3,10 +3,10 @@
 format compact; format long g; close all; clear all; clc;
 
 # sampling frequency in Hz
-fs = 44.1e3
+fs = 100
 
 % signal frequency in Hz
-f = 100
+f = 1
 
 # signal period in samples
 T = 1/f*fs
@@ -15,33 +15,35 @@ T = 1/f*fs
 Ts = 1/fs
 
 # amplitude
-A = 0.1;
+A = 1;
 
-# plotting
+# plots
 rows = 4;
 cols = 2;
 index = 0;
-window = T*2
+scale = 1;
+window = T * scale
+x = 0:fs*scale;
+x_t = x*Ts;
+
 
 # SINE WAVE GENERATOR
-x = 0:fs;
-x_t = x*Ts;
 y = A * sin(2 * pi * f * x / fs);
 audiowrite('sine.wav', y, fs);
 
 figure(1, 'name', 'basic wave forms ("continuous" vs. sampled")', 'position', [0, 0, 1910, 1000]);
 subplot(rows, cols, ++index);
-plot(x_t(1:window), y(1:window) / A, 'linewidth', 2), grid minor;
+plot(x_t(1:window), y(1:window), 'linewidth', 2), grid minor;
 title(sprintf('sine wave, fs=%d Hz, f=%d Hz', fs, f));
-xlabel('time \rightarrow [s]');
-ylabel('y = sin(2 * pi * f / fs)');
+xlabel('time t \rightarrow [s]');
+ylabel('y = A * sin(2 * pi * f * t / fs)');
 
 subplot(rows, cols, ++index);
-stem(x(1:window), y(1:window) / A, '.r', 'linewidth', 1), grid minor;
+stem(x(1:window), y(1:window), '.r', 'linewidth', 1), grid minor;
 title(sprintf('sine wave, fs=%d Hz, f=%d Hz', fs, f));
-xlabel('samples');
+xlabel('sample');
 xlim([0 window]);
-ylabel('y = sin(2 * pi * f / fs)');
+ylabel('amplitude');
 
 # --------------------------------------
 
@@ -52,15 +54,16 @@ y = repmat(A * waveform, 1, 1000);
 audiowrite('square.wav', y, fs);
 
 subplot(rows, cols, ++index);
-plot(x_t(1:window), y(1:window) / A, 'linewidth', 2), grid minor;
+plot(x_t(1:window), y(1:window), 'linewidth', 2), grid minor;
 title(sprintf('square wave, fs=%d Hz, f=%d Hz', fs, f));
-xlabel('time \rightarrow [s]');
+xlabel('time t \rightarrow [s]');
 
 subplot(rows, cols, ++index);
-stem(x(1:window), y(1:window) / A, '.r', 'linewidth', 1), grid minor;
+stem(x(1:window), y(1:window), '.r', 'linewidth', 1), grid minor;
 title(sprintf('square wave, fs=%d Hz, f=%d Hz', fs, f));
-xlabel('samples');
+xlabel('sample');
 xlim([0 window]);
+ylabel('amplitude');
 
 # --------------------------------------
 
@@ -71,15 +74,16 @@ y = repmat(A * waveform, 1, 1000);
 audiowrite('saw.wav', y, fs);
 
 subplot(rows, cols, ++index);
-plot(x_t(1:window), y(1:window) / A, 'linewidth', 2), grid minor;
+plot(x_t(1:window), y(1:window), 'linewidth', 2), grid minor;
 title(sprintf('saw wave, fs=%d Hz, f=%d Hz', fs, f));
-xlabel('time \rightarrow [s]');
+xlabel('time t \rightarrow [s]');
 
 subplot(rows, cols, ++index);
-stem(x(1:window), y(1:window) / A, '.r', 'linewidth', 1), grid minor;
+stem(x(1:window), y(1:window), '.r', 'linewidth', 1), grid minor;
 title(sprintf('saw wave, fs=%d Hz, f=%d Hz', fs, f));
-xlabel('samples');
+xlabel('sample');
 xlim([0 window]);
+ylabel('amplitude');
 
 # --------------------------------------
 
@@ -90,12 +94,13 @@ y = repmat(A * waveform, 1, 1000);
 audiowrite('tringle.wav', y, fs);
 
 subplot(rows, cols, ++index);
-plot(x_t(1:window), y(1:window) / A, 'linewidth', 2), grid minor;
+plot(x_t(1:window), y(1:window), 'linewidth', 2), grid minor;
 title(sprintf('triangle wave, fs=%d Hz, f=%d Hz', fs, f));
-xlabel('time \rightarrow [s]');
+xlabel('time t \rightarrow [s]');
 
 subplot(rows, cols, ++index);
-stem(x(1:window), y(1:window) / A, '.r', 'linewidth', 1), grid minor;
+stem(x(1:window), y(1:window), '.r', 'linewidth', 1), grid minor;
 title(sprintf('triangle wave, fs=%d Hz, f=%d Hz', fs, f));
-xlabel('samples');
+xlabel('sample');
 xlim([0 window]);
+ylabel('amplitude');
